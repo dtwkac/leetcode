@@ -33,9 +33,6 @@ public:
                       inorder, inorder_low + left_size + 1, inorder_high));
     }
     TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
-        if (preorder.empty()) {
-            return nullptr;
-        }
         return buildTree(preorder, 0, preorder.size() - 1, inorder, 0,
                          inorder.size() - 1);
     }
