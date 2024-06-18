@@ -12,26 +12,31 @@
  */
 class Solution {
 public:
-    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
-        if (preorder.empty() && inorder.empty()) {
+    TreeNode* buildTree(const vector<int>& preorder, int preorder_low,
+                        int preorder_high, const vector<int> inorder,
+                        int inorder_low, int inorder_high) {
+        if (preorder_low > preorder_high) {
             return nullptr;
         }
+        if (preorder_low == preorder_high) {
+            return new TreeNode(preorder[preorder_low]);
+        }
         int left_size = 0;
-        while (inorder[left_size] != preorder[0]) {
+        while (inorder[inorder_low + left_size] != preorder[preorder_low]) {
             ++left_size;
         }
-        int right_size = preorder.size() - 1 - left_size;
-        vector<int> left_preorder, left_inorder;
-        for (int i = 0; i < left_size; ++i) {
-            left_preorder.push_back(preorder[1 + i]);
-            left_inorder.push_back(inorder[i]);
+        return new TreeNode(
+            preorder[preorder_low],
+            buildTree(preorder, preorder_low + 1, preorder_low + left_size,
+                      inorder, inorder_low, inorder_low + left_size - 1),
+            buildTree(preorder, preorder_low + 1 + left_size, preorder_high,
+                      inorder, inorder_low + left_size + 1, inorder_high));
+    }
+    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+        if (preorder.empty()) {
+            return nullptr;
         }
-        vector<int> right_preorder, right_inorder;
-        for (int i = 0; i < right_size; ++i) {
-            right_preorder.push_back(preorder[1 + left_size + i]);
-            right_inorder.push_back(inorder[left_size + 1 + i]);
-        }
-        return new TreeNode(preorder[0], buildTree(left_preorder, left_inorder),
-                            buildTree(right_preorder, right_inorder));
+        return buildTree(preorder, 0, preorder.size() - 1, inorder, 0,
+                         inorder.size() - 1);
     }
 };
