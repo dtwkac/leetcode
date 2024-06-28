@@ -12,8 +12,8 @@
  */
 class Solution {
 public:
-    TreeNode* buildTree(vector<int>& preorder, int preorder_low,
-                        int preorder_high, vector<int>& inorder,
+    TreeNode* buildTree(const vector<int>& preorder, int preorder_low,
+                        int preorder_high, const vector<int>& inorder,
                         int inorder_low, int inorder_high) {
         if (preorder_low > preorder_high) {
             return nullptr;
