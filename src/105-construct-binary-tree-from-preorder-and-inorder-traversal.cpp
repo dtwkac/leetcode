@@ -12,14 +12,11 @@
  */
 class Solution {
 public:
-    TreeNode* buildTree(const vector<int>& preorder, int preorder_low,
-                        int preorder_high, const vector<int> inorder,
+    TreeNode* buildTree(vector<int>& preorder, int preorder_low,
+                        int preorder_high, vector<int>& inorder,
                         int inorder_low, int inorder_high) {
         if (preorder_low > preorder_high) {
             return nullptr;
-        }
-        if (preorder_low == preorder_high) {
-            return new TreeNode(preorder[preorder_low]);
         }
         int left_size = 0;
         while (inorder[inorder_low + left_size] != preorder[preorder_low]) {
