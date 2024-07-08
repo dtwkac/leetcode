@@ -16,7 +16,7 @@ public:
         if (!p && !q) {
             return true;
         }
-        if ((p && !q) || (q && !p)) {
+        if (p && !q || !p && q) {
             return false;
         }
         return p->val == q->val && isSameTree(p->left, q->left) &&
