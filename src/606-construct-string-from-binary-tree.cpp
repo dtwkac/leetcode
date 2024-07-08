@@ -12,22 +12,22 @@
  */
 class Solution {
 public:
-    void preorder(TreeNode* root, string& s) {
+    void preorderTraversal(TreeNode* root, string& s) {
         if (!root) {
             return;
         }
         s += "(" + to_string(root->val);
+        preorderTraversal(root->left, s);
         if (!root->left && root->right) {
             s += "()";
         }
-        preorder(root->left, s);
-        preorder(root->right, s);
+        preorderTraversal(root->right, s);
         s += ")";
     }
 
     string tree2str(TreeNode* root) {
         string s;
-        preorder(root, s);
-        return string(s.cbegin() + 1, s.cend() - 1);
+        preorderTraversal(root, s);
+        return s.substr(1, s.size() - 2);
     }
 };
