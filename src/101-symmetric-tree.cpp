@@ -16,7 +16,7 @@ public:
         if (!t1 && !t2) {
             return true;
         }
-        if (t1 && !t2 || t2 && !t1) {
+        if (t1 && !t2 || !t1 && t2) {
             return false;
         }
         return t1->val == t2->val && isSymmetric(t1->left, t2->right) &&
