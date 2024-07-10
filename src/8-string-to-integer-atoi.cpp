@@ -22,7 +22,7 @@ public:
                     return positive ? INT_MAX : INT_MIN;
                 }
                 n = n * 10 + (s[i] - '0');
-                if (i + 1 < size && (s[i + 1] < '0' || s[i + 1] > '9')) {
+                if (i < size - 1 && (s[i + 1] < '0' || s[i + 1] > '9')) {
                     break;
                 }
             } else {
