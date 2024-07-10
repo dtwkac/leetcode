@@ -23,9 +23,8 @@ public:
         }
         if (target == head) {
             return head->next;
-        } else {
-            prev->next = target->next;
-            return head;
         }
+        prev->next = target->next;
+        return head;
     }
 };
