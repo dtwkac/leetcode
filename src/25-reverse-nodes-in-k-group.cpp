@@ -11,7 +11,7 @@
 class Solution {
 public:
     ListNode* reverseKGroup(ListNode* head, int k) {
-        ListNode sentinel(-1, head), *front = &sentinel, *curr = head;
+        ListNode sentinel(-1, head), *former = &sentinel, *curr = head;
         while (curr) {
             ListNode *pioneer = curr, *new_head = nullptr, *new_tail = nullptr;
             for (int i = 0; i < k; ++i) {
@@ -33,9 +33,9 @@ public:
                 prev = curr;
                 curr = post;
             }
-            front->next = new_head;
+            former->next = new_head;
             new_tail->next = curr;
-            front = new_tail;
+            former = new_tail;
         }
         return sentinel.next;
     }
