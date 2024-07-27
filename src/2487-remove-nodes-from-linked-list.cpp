@@ -11,18 +11,20 @@
 class Solution {
 public:
     ListNode* removeNodes(ListNode* head) {
-        ListNode sentinel(-1, nullptr), *prev = &sentinel, *curr = head;
-        vector<ListNode*> v;
+        ListNode sentinel(-1), *prev = &sentinel, *curr = head;
+        stack<ListNode*> s;
         while (curr) {
-            while (!v.empty() && curr->val > v[v.size() - 1]->val) {
-                v.pop_back();
+            while (!s.empty() && curr->val > s.top()->val) {
+                s.pop();
             }
-            v.push_back(curr);
+            s.push(curr);
             curr = curr->next;
         }
-        for (ListNode* i : v) {
-            prev->next = i;
-            prev = prev->next;
+        while (!s.empty()) {
+            curr = prev->next;
+            prev->next = s.top();
+            s.top()->next = curr;
+            s.pop();
         }
         return sentinel.next;
     }
