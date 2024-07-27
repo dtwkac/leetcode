@@ -1,18 +1,18 @@
 class Solution {
 public:
     int trap(vector<int>& height) {
-        int n = height.size();
-        vector<int> left_max(n), right_max(n);
-        for (int i = 0; i < n; ++i) {
-            left_max[i] = i == 0 ? height[0] : max(left_max[i - 1], height[i]);
-        }
-        for (int i = n - 1; i > -1; --i) {
-            right_max[i] =
-                i == n - 1 ? height[i] : max(right_max[i + 1], height[i]);
-        }
+        int left = 0, right = height.size() - 1, left_max = 0, right_max = 0;
         int vol = 0;
-        for (int i = 0; i < n; ++i) {
-            vol += (min(left_max[i], right_max[i]) - height[i]);
+        while (left < right) {
+            left_max = max(height[left], left_max);
+            right_max = max(height[right], right_max);
+            if (left_max < right_max) {
+                vol += left_max - height[left];
+                ++left;
+            } else {
+                vol += right_max - height[right];
+                --right;
+            }
         }
         return vol;
     }
