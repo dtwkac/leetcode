@@ -12,20 +12,23 @@
  */
 class Solution {
 public:
-    bool inorderTraversal(TreeNode* root, long long& prev) {
-        if (!root) {
-            return true;
-        }
-        bool left = inorderTraversal(root->left, prev);
-        if (root->val <= prev) {
-            return false;
-        }
-        prev = root->val;
-        bool right = inorderTraversal(root->right, prev);
-        return left && right;
-    }
     bool isValidBST(TreeNode* root) {
+        bool flag = true;
         long long prev = LONG_LONG_MIN;
-        return inorderTraversal(root, prev);
+        function<void(TreeNode*)> dfs = [&dfs, &flag,
+                                         &prev](TreeNode* root) -> void {
+            if (!root) {
+                return;
+            }
+            dfs(root->left);
+            if (root->val <= prev) {
+                flag = false;
+                return;
+            }
+            prev = root->val;
+            dfs(root->right);
+        };
+        dfs(root);
+        return flag;
     }
 };
