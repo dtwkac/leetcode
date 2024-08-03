@@ -12,18 +12,18 @@
  */
 class Solution {
 public:
-    bool isSameTree(TreeNode* p, TreeNode* q) {
-        if (!p && !q) {
-            return true;
-        }
-        if (p && !q || !p && q) {
-            return false;
-        }
-        return p->val == q->val && isSameTree(p->left, q->left) &&
-               isSameTree(p->right, q->right);
-    }
-
     bool isSubtree(TreeNode* root, TreeNode* subRoot) {
+        function<bool(TreeNode*, TreeNode*)> isSameTree =
+            [&isSameTree](TreeNode* p, TreeNode* q) -> bool {
+            if (!p && !q) {
+                return true;
+            }
+            if ((p && !q) || (!p && q)) {
+                return false;
+            }
+            return p->val == q->val && isSameTree(p->left, q->left) &&
+                   isSameTree(p->right, q->right);
+        };
         if (!root) {
             return false;
         }
