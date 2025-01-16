@@ -29,6 +29,7 @@ public:
             buildTree(preorder, preorder_low + 1 + left_size, preorder_high,
                       inorder, inorder_low + left_size + 1, inorder_high));
     }
+
     TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
         return buildTree(preorder, 0, preorder.size() - 1, inorder, 0,
                          inorder.size() - 1);
