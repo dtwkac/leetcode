@@ -13,8 +13,8 @@
 class Solution {
 public:
     bool isSymmetric(TreeNode* root) {
-        function<bool(TreeNode * t1, TreeNode * t2)> AreTwoTreesSymmetric =
-            [&AreTwoTreesSymmetric](TreeNode* t1, TreeNode* t2) -> bool {
+        function<bool(TreeNode*, TreeNode*)> AreTreesSymmetric =
+            [&AreTreesSymmetric](TreeNode* t1, TreeNode* t2) -> bool {
             if (!t1 && !t2) {
                 return true;
             }
@@ -22,12 +22,12 @@ public:
                 return false;
             }
             return t1->val == t2->val &&
-                   AreTwoTreesSymmetric(t1->left, t2->right) &&
-                   AreTwoTreesSymmetric(t1->right, t2->left);
+                   AreTreesSymmetric(t1->left, t2->right) &&
+                   AreTreesSymmetric(t1->right, t2->left);
         };
         if (!root) {
             return true;
         }
-        return AreTwoTreesSymmetric(root->left, root->right);
+        return AreTreesSymmetric(root->left, root->right);
     }
 };
