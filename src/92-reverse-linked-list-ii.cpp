@@ -11,35 +11,37 @@
 class Solution {
 public:
     ListNode* reverseBetween(ListNode* head, int left, int right) {
-        ListNode *former_tail = nullptr, *successor_head = nullptr,
-                 *new_head = nullptr, *new_tail = nullptr;
-        ListNode *prev = nullptr, *curr = head;
-        for (int i = 1; i <= right; ++i) {
-            if (i == left) {
-                new_tail = curr;
-                former_tail = prev;
+        int i = 1;
+        ListNode *curr = head, *prev = nullptr;
+        ListNode *left_tail = nullptr, *right_head = nullptr,
+                 *rev_head = nullptr, *rev_tail = nullptr;
+        while (curr) {
+            if (i == left - 1) {
+                left_tail = prev = curr;
+                curr = curr->next;
+            } else if (i >= left && i <= right) {
+                if (i == left) {
+                    rev_tail = curr;
+                }
+                if (i == right) {
+                    rev_head = curr;
+                    right_head = curr->next;
+                }
+                ListNode* post = curr->next;
+                curr->next = prev;
+                prev = curr;
+                curr = post;
+            } else {
+                curr = curr->next;
             }
-            if (i == right) {
-                new_head = curr;
-                successor_head = curr->next;
-            }
-            prev = curr;
-            curr = curr->next;
+            ++i;
         }
-        curr = new_tail;
-        prev = nullptr;
-        for (int i = left; i <= right; ++i) {
-            ListNode* post = curr->next;
-            curr->next = prev;
-            prev = curr;
-            curr = post;
-        }
-        new_tail->next = successor_head;
-        if (new_tail == head) {
-            return new_head;
-        } else {
-            former_tail->next = new_head;
+        rev_tail->next = right_head;
+        if (left_tail) {
+            left_tail->next = rev_head;
             return head;
+        } else {
+            return rev_head;
         }
     }
 };
