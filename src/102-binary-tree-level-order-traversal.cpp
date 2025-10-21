@@ -29,7 +29,7 @@ public:
                     q.push(t->left);
                 }
                 if (t->right) {
-                    q.push(q.front()->right);
+                    q.push(t->right);
                 }
                 q.pop();
             }
